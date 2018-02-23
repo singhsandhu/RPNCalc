@@ -1,0 +1,85 @@
+    # run
+
+    - name: Update apt cache
+      apt: update_cache=yes
+      become: yes
+      tags:
+      - core
+      - provision
+
+
+    - name: Install java 8 preresequesits
+      apt: name=python-software-properties
+      become: yes
+      tags:
+      - core
+      - provision
+
+    - name: Add Java 8 repository
+      apt_repository: repo='ppa:webupd8team/java'
+      become: yes
+      tags:
+      - core
+      - provision
+
+    - name: Agree to oracle license
+      debconf: name=oracle-java8-installer question=shared/accepted-oracle-license-v1-1 vtype=select value=true
+      become: yes
+      tags:
+      - core
+      - provision
+
+    - name: Install Java 8
+      apt: name=oracle-java8-installer force=yes
+      become: yes
+      tags:
+      - core
+      - provision
+
+    - name: Install common dependencies
+      apt: pkg={{ item }}
+      become: yes
+      with_items:
+      - maven
+      - python-httplib2
+      - apt-transport-https
+      - python
+      - python-pip
+      - python-dev
+      - python-openssl
+      - build-essential
+      - libssl-dev
+      - libffi-dev
+      tags:
+      - core
+      - provision
+
+    - name: Install Timezone data
+      apt: pkg=tzdata
+      become: yes
+      tags:
+      - core
+      - run
+
+    - name: Set timezone
+      copy: content=Australia/Melbourne dest=/etc/timezone
+      become: yes
+      tags:
+      - core
+      - run
+
+    - name: Set Local Time
+      shell: dpkg-reconfigure --frontend noninteractive tzdata
+      become: yes
+      tags:
+      - core
+      - run
+
+    # development
+
+    - name: Install vim
+      apt: pkg=vim
+      become: yes
+      tags:
+      - core
+      - development
