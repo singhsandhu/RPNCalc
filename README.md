@@ -25,7 +25,7 @@
 
 
 ## Running using Docker Hub image
-`docker run -it ramanjitsingh/rpndocker run -it ramanjitsingh/rpn`
+`docker run -it ramanjitsingh/rpn`
 
 ## Author
 Ramanjit Singh
