@@ -2,6 +2,7 @@ import com.rpn.input.UserInput;
 import com.rpn.mapper.OperatorMapper;
 import com.rpn.stack.RPNStack;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -25,7 +26,8 @@ public class RPNCalculator {
     }
 
     public void evaulateAndPrintStack(String userProvidedInput) {
-        String[] tokenisedString = userProvidedInput.split("\\s");
+        String[] tokenisedString = getTokenisedStringFromUserInput(userProvidedInput);
+
         OperatorMapper operatorMapper = new OperatorMapper();
 
         IntStream.range(0, tokenisedString.length)
@@ -34,6 +36,12 @@ public class RPNCalculator {
                 .forEach(operator -> operator.execute());
 
         getStackInstance().printStack();
+    }
+
+    String[] getTokenisedStringFromUserInput(String userProvidedInput) {
+        return Arrays.stream(userProvidedInput.split("\\s"))
+                .filter(s -> !s.equals(""))
+                .toArray((String[]::new));
     }
 
     RPNStack getStackInstance() {
