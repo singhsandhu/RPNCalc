@@ -14,7 +14,8 @@ public class InvalidInputOperator extends AbstractOperator{
         if(!valuesStack.isFurtherProcessingAllowed()) {
             return;
         }
-        System.out.println(String.format("Invalid input %s (position: %d)", userInput.getValue(), userInput.getPosition() + 1));
+        System.out.println(String.format("Invalid input %s (position: %d)", userInput.getValue(),
+                userInput.getPosition() + 1));
         valuesStack.setFurtherProcessingAllowed(false);
     }
 }
